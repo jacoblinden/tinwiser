@@ -1,0 +1,15 @@
+{
+  "name": "tinwiser",
+  "private": true,
+  "description": "Tinwiser monorepo - UIs and backends",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:landing": "cd apps/landing && npx serve .",
+    "build:landing": "echo 'Static files - no build needed'",
+    "deploy:landing": "cd infra && terraform apply -auto-approve"
+  },
+  "packageManager": "npm@10"
+}

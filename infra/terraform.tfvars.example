@@ -1,0 +1,7 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+project_id  = "your-gcp-project-id"
+region      = "europe-west1"
+domain      = "tinwiser.com"
+bucket_name = "tinwiser-website"  # Must be globally unique across all of GCP
+enable_ssl  = true

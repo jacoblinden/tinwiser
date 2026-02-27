@@ -41,4 +41,13 @@ if (mobileToggle && navLinks) {
       }
     });
   });
+  // collapse menu when tapping outside
+  document.addEventListener('click', (e) => {
+    if (navLinks.classList.contains('open') &&
+        !navLinks.contains(e.target) &&
+        !mobileToggle.contains(e.target)) {
+      navLinks.classList.remove('open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
 }

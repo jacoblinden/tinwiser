@@ -54,8 +54,19 @@ img { display: block; max-width: 100%; }
 
 .topbar-inner {
   max-width: 1140px; margin: 0 auto; padding: 0 32px;
-  height: 68px; display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
+.topbar-inner > .logo { justify-self: start; }
+.topbar-inner > nav { justify-self: center; }
+.topbar-inner > .topbar-right { justify-self: end; }
+.topbar-right {
+  display: flex; align-items: center; gap: 12px;
+}
+/* Hide "Get in Touch" on contact page — they're already there */
+.page-contact .nav-btn { display: none; }
 
 .logo { display: flex; align-items: center; gap: 10px; }
 .logo img { height: 30px; }
@@ -192,15 +203,119 @@ footer { padding: 48px 0; background: var(--white); border-top: 1px solid var(--
 .reveal-d4 { transition-delay: 0.32s; }
 .reveal-d5 { transition-delay: 0.40s; }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE (mobile-first) ── */
 @media (max-width: 900px) {
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    grid-template-columns: none;
+  }
+  .topbar-inner > .logo,
+  .topbar-inner > nav,
+  .topbar-inner > .topbar-right {
+    justify-self: unset;
+  }
   .nav-links { display: none; }
-  .mobile-toggle { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 20px 24px;
+    gap: 0;
+    z-index: 250;
+    border-bottom: 1px solid var(--border);
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
+  }
+  .nav-links.open a {
+    font-size: 17px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .nav-links.open li:last-child a { border-bottom: none; }
+  .topbar-right { gap: 8px; }
+  .nav-btn {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+  }
   .split { grid-template-columns: 1fr; gap: 40px; }
-  .footer-inner { flex-direction: column; gap: 24px; }
+  .footer-inner { flex-direction: column; gap: 24px; text-align: center; }
   .container, .container-narrow { padding: 0 20px; }
+  /* Contact page two-col stack */
+  .contact-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  /* Card grids: 2 cols on tablet */
+  .card-grid-three {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .card-grid-two {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 }
 @media (max-width: 600px) {
-  .section { padding: 72px 0; }
-  .page-hero { padding: 130px 0 60px; }
+  .topbar-inner { padding: 0 16px; height: 56px; }
+  .logo img { height: 26px; }
+  .section { padding: 56px 0; }
+  .section-lg { padding: 80px 0 56px; }
+  .page-hero { padding: 100px 0 48px; }
+  .page-hero .section-heading { font-size: clamp(1.65rem, 6vw, 2.25rem); }
+  .section-heading { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .section-desc { font-size: 15px; }
+  .container, .container-narrow { padding: 0 16px; }
+  .nav-links.open { top: 56px; }
+  .btn {
+    padding: 14px 20px;
+    font-size: 15px;
+    min-height: 48px;
+    justify-content: center;
+  }
+  .card { padding: 24px 20px; }
+  .card h3 { font-size: 16px; }
+  .card p { font-size: 14px; }
+  /* Hero image grid on index */
+  .hero-img-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 200px 200px 200px !important;
+    gap: 8px !important;
+  }
+  .hero-img-grid .hero-img-main {
+    grid-row: span 1 !important;
+  }
+  /* Solutions 3-col image strip */
+  .solutions-img-strip {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .card-grid-three,
+  .card-grid-two {
+    grid-template-columns: 1fr !important;
+  }
+  .quote-block { padding: 48px 0; }
+  .quote-text { font-size: clamp(1.15rem, 4.5vw, 1.45rem); }
+  .cta-section { padding: 56px 0 72px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+@media (max-width: 380px) {
+  .page-hero .section-heading { font-size: 1.5rem; }
+  .section-heading { font-size: 1.4rem; }
 }

@@ -27,3 +27,15 @@ variable "enable_ssl" {
   type        = bool
   default     = true
 }
+
+variable "manage_dns" {
+  description = "Manage DNS A records in Cloud DNS (requires existing managed zone)"
+  type        = bool
+  default     = false
+}
+
+variable "dns_zone_name" {
+  description = "Name of the existing Cloud DNS managed zone (e.g. tinwiser-com). Required when manage_dns = true."
+  type        = string
+  default     = ""
+}

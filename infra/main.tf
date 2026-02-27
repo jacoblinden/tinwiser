@@ -33,6 +33,14 @@ resource "google_project_service" "storage" {
   disable_on_destroy = false
 }
 
+resource "google_project_service" "dns" {
+  count = var.manage_dns ? 1 : 0
+
+  project            = var.project_id
+  service            = "dns.googleapis.com"
+  disable_on_destroy = false
+}
+
 # Wait for Compute API to propagate (can take 1-2 min after enable)
 resource "time_sleep" "compute_api_propagation" {
   create_duration = "90s"
@@ -236,4 +244,38 @@ resource "google_compute_global_forwarding_rule" "http_only" {
   target                = google_compute_target_http_proxy.website_http_only[0].id
   ip_address            = google_compute_global_address.lb_ip.address
   load_balancing_scheme = "EXTERNAL_MANAGED"
+}
+
+# -----------------------------------------------------------------------------
+# Cloud DNS - A records (when manage_dns = true, requires existing zone)
+# -----------------------------------------------------------------------------
+data "google_dns_managed_zone" "website" {
+  count = var.manage_dns ? 1 : 0
+
+  name    = var.dns_zone_name
+  project = var.project_id
+}
+
+resource "google_dns_record_set" "root" {
+  count = var.manage_dns ? 1 : 0
+
+  name         = data.google_dns_managed_zone.website[0].dns_name
+  managed_zone = data.google_dns_managed_zone.website[0].name
+  type         = "A"
+  ttl          = 300
+  rrdatas      = [google_compute_global_address.lb_ip.address]
+
+  depends_on = [google_project_service.dns]
+}
+
+resource "google_dns_record_set" "www" {
+  count = var.manage_dns ? 1 : 0
+
+  name         = "www.${data.google_dns_managed_zone.website[0].dns_name}"
+  managed_zone = data.google_dns_managed_zone.website[0].name
+  type         = "A"
+  ttl          = 300
+  rrdatas      = [google_compute_global_address.lb_ip.address]
+
+  depends_on = [google_project_service.dns]
 }

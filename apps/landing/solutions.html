@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions — Tinwiser</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><img src="logo.png" alt="Tinwiser"><span class="logo-text">Tinwiser</span></a>
+    <nav><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="vision.html">Vision</a></li>
+      <li><a href="solutions.html" class="active">Solutions</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <a href="contact.html" class="nav-btn">Get in Touch</a>
+    <button class="mobile-toggle" aria-label="Menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="section-label" style="opacity:0; animation:fadeUp .6s .1s forwards;">Solutions</p>
+    <h1 class="section-heading" style="font-size:clamp(2rem,4vw,3rem); opacity:0; animation:fadeUp .6s .2s forwards;">What we're building.</h1>
+    <p class="section-desc" style="text-align:center; margin:16px auto 0; opacity:0; animation:fadeUp .6s .35s forwards;">Our focus areas span the full spectrum of drone-based tracking, surveillance, and aerial data collection.</p>
+  </div>
+</section>
+
+<!-- IMAGE STRIP -->
+<div class="container reveal" style="padding-bottom:60px;">
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+    <div class="img-card" style="aspect-ratio:16/10;"><img src="img_detection_parking.png" alt="AI detection"><span class="img-card-label">Detection</span></div>
+    <div class="img-card" style="aspect-ratio:16/10;"><img src="img_thermal.png" alt="Thermal imaging"><span class="img-card-label">Thermal</span></div>
+    <div class="img-card" style="aspect-ratio:16/10;"><img src="img_hud_tracking.png" alt="HUD tracking"><span class="img-card-label">Tracking</span></div>
+  </div>
+</div>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- ALL SOLUTIONS -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+      <div class="card reveal reveal-d1">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <h3>Real-Time Object Tracking</h3>
+        <p>AI-driven visual tracking that identifies and follows targets across complex, dynamic environments. Our systems are designed to lock on with sub-second accuracy and maintain tracking through occlusion, weather changes, and rapid movement.</p>
+      </div>
+      <div class="card reveal reveal-d2">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l6-4 6 4 6-4v14l-6 4-6-4-6 4V7z"/><path d="M9 3v14M15 7v14"/></svg></div>
+        <h3>Autonomous Patrol &amp; Mapping</h3>
+        <p>Pre-programmed and adaptive flight paths for continuous area surveillance and high-resolution terrain mapping. Drones that patrol, adapt to changing conditions, and build detailed spatial maps without manual control.</p>
+      </div>
+      <div class="card reveal reveal-d3">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Multi-Spectrum Imaging</h3>
+        <p>Thermal, infrared, and night-vision capabilities designed for round-the-clock operations in any lighting or weather condition. See what visible light can't reveal — from heat signatures to moisture patterns.</p>
+      </div>
+      <div class="card reveal reveal-d4">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3>Live Data Streaming</h3>
+        <p>Encrypted, real-time video and telemetry feeds delivered directly to command centers. Our streaming architecture is designed for minimal latency and maximum reliability, even in bandwidth-constrained environments.</p>
+      </div>
+      <div class="card reveal reveal-d5">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h3>Geofencing &amp; Alerts</h3>
+        <p>Define virtual perimeters and receive instant notifications when tracked objects enter or leave designated zones. Smart boundary management for security, logistics, and environmental monitoring.</p>
+      </div>
+      <div class="card reveal reveal-d5">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg></div>
+        <h3>Fleet Coordination</h3>
+        <p>Multi-drone orchestration for large-scale operations. Synchronized coverage, intelligent task distribution, and coordinated flight patterns — managed from a single unified interface.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- DASHBOARD -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="section-label">The Platform</p>
+        <h2 class="section-heading">Built to work in the real world.</h2>
+        <p class="section-desc">We're not building for demos or controlled environments. Every system we design is meant to operate in unpredictable conditions — wind, rain, urban clutter, remote terrain.</p>
+        <p class="section-desc" style="margin-top:12px;">That philosophy shapes every technical decision we make.</p>
+      </div>
+      <div class="split-visual reveal reveal-d2">
+        <img src="img_dashboard.png" alt="Tinwiser platform dashboard">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container reveal">
+    <p class="section-label">Collaborate With Us</p>
+    <h2 class="section-heading">Want to explore a use case together?</h2>
+    <p class="section-desc" style="text-align:center; margin:12px auto 36px;">We're actively looking for early partners and pilot projects.</p>
+    <a href="contact.html" class="btn btn-primary">Get in Touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<footer>
+  <div class="container"><div class="footer-inner">
+    <div class="footer-left"><img src="logo.png" alt="Tinwiser"><span class="footer-copy">&copy; 2026 Tinwiser</span></div>
+    <ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="solutions.html">Solutions</a></li><li><a href="contact.html">Contact</a></li></ul>
+  </div></div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>

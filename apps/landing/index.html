@@ -1,69 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tinwiser – Smarter solutions for modern challenges">
-  <title>Tinwiser</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tinwiser — Aerial Drone Tracking</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <nav class="nav">
-      <a href="/" class="logo">Tinwiser</a>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span class="hero-line">Smarter</span>
-          <span class="hero-line">solutions</span>
-          <span class="hero-line accent">for modern challenges</span>
-        </h1>
-        <p class="hero-subtitle">
-          We build with clarity, precision, and purpose. 
-          From idea to impact.
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><img src="logo.png" alt="Tinwiser"><span class="logo-text">Tinwiser</span></a>
+    <nav><ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="vision.html">Vision</a></li>
+      <li><a href="solutions.html">Solutions</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <a href="contact.html" class="nav-btn">Get in Touch</a>
+    <button class="mobile-toggle" aria-label="Menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="section-lg" style="padding-top:160px; padding-bottom:80px;">
+  <div class="container">
+    <div style="max-width:640px;">
+      <p class="section-label" style="opacity:0; animation:fadeUp .6s .1s forwards;">Aerial intelligence, reimagined</p>
+      <h1 style="font-size:clamp(2.6rem,5.5vw,4.2rem); font-weight:700; line-height:1.08; letter-spacing:-1.5px; opacity:0; animation:fadeUp .6s .2s forwards;">
+        Smarter drones.<br>Sharper tracking.
+      </h1>
+      <p style="margin-top:20px; font-size:17px; color:var(--text-mid); max-width:460px; line-height:1.7; opacity:0; animation:fadeUp .6s .35s forwards;">
+        Tinwiser is building intelligent drone systems for precision tracking 
+        and real-time aerial data — from the ground up.
+      </p>
+      <div style="display:flex; gap:12px; margin-top:36px; opacity:0; animation:fadeUp .6s .5s forwards;">
+        <a href="vision.html" class="btn btn-primary">Our Vision <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="solutions.html" class="btn btn-ghost">What We're Building</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE GRID -->
+<div class="container" style="padding-bottom:80px;">
+  <div class="reveal" style="display:grid; grid-template-columns:1.4fr 1fr; grid-template-rows:260px 260px; gap:10px;">
+    <div class="img-card" style="grid-row:span 2;">
+      <img src="img_street_detection.png" alt="AI object detection on urban intersection">
+      <span class="img-card-label">AI Object Detection</span>
+    </div>
+    <div class="img-card">
+      <img src="img_hud_tracking.png" alt="Drone HUD tracking interface">
+      <span class="img-card-label">Tracking HUD</span>
+    </div>
+    <div class="img-card">
+      <img src="img_thermal.png" alt="Thermal detection view">
+      <span class="img-card-label">Thermal Imaging</span>
+    </div>
+  </div>
+</div>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-heading">Drones that see what others miss.</h2>
+        <p class="section-desc">
+          Tinwiser is an early-stage startup building the next generation of 
+          drone-based tracking systems. We're focused on making precision 
+          aerial data accessible, autonomous, and intelligent.
         </p>
-        <a href="#contact" class="cta-button">Get in touch</a>
+        <a href="about.html" class="btn btn-outline" style="margin-top:28px;">
+          About Tinwiser <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
-      <div class="hero-visual">
-        <div class="hero-shape"></div>
+      <div class="split-visual reveal reveal-d2">
+        <img src="img_detection_parking.png" alt="AI parking lot detection">
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section id="about" class="about">
-      <div class="about-content">
-        <h2>We are Tinwiser</h2>
-        <p class="about-lead">
-          A company forged from the idea that technology should serve people—not the other way around.
-        </p>
-        <p>
-          We craft software, products, and experiences that stand the test of time. 
-          Thoughtful design. Robust engineering. No shortcuts.
-        </p>
-      </div>
-    </section>
+<div class="container"><hr class="divider"></div>
 
-    <section id="contact" class="contact">
-      <div class="contact-content">
-        <h2>Let's talk</h2>
-        <p>Have a project in mind? We'd love to hear from you.</p>
-        <a href="mailto:hello@tinwiser.com" class="contact-email">hello@tinwiser.com</a>
-      </div>
-    </section>
-  </main>
+<!-- DASHBOARD SHOWCASE -->
+<section class="section">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:40px;">
+      <p class="section-label">The Platform</p>
+      <h2 class="section-heading" style="margin:0 auto;">Unified tracking intelligence.</h2>
+      <p class="section-desc" style="margin:14px auto 0; text-align:center;">
+        One interface to manage detection, mapping, and real-time aerial data.
+      </p>
+    </div>
+    <div class="img-card reveal" style="border-radius:var(--radius); overflow:hidden;">
+      <img src="img_dashboard.png" alt="Tinwiser dashboard" style="width:100%;">
+    </div>
+  </div>
+</section>
 
-  <footer class="footer">
-    <p>&copy; 2025 Tinwiser. All rights reserved.</p>
-  </footer>
+<div class="container"><hr class="divider"></div>
+
+<!-- SOLUTIONS PREVIEW -->
+<section class="section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">What We're Building</p>
+      <h2 class="section-heading">Intelligent aerial systems for the real world.</h2>
+      <p class="section-desc">Our focus spans the full spectrum of drone-based tracking and data.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:48px;">
+      <div class="card reveal reveal-d1">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <h3>Object Tracking</h3>
+        <p>AI-driven visual tracking across complex, dynamic environments in real time.</p>
+      </div>
+      <div class="card reveal reveal-d2">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l6-4 6 4 6-4v14l-6 4-6-4-6 4V7z"/><path d="M9 3v14M15 7v14"/></svg></div>
+        <h3>Autonomous Mapping</h3>
+        <p>Adaptive flight paths for continuous surveillance and terrain mapping.</p>
+      </div>
+      <div class="card reveal reveal-d3">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Multi-Spectrum Imaging</h3>
+        <p>Thermal and night-vision for 24/7 operations in any condition.</p>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center; margin-top:40px;">
+      <a href="solutions.html" class="btn btn-outline">View All Solutions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- QUOTE -->
+<div class="quote-block">
+  <div class="container reveal">
+    <p class="quote-text">"We're not just building drones — we're building a <strong>new layer of awareness</strong> for the world below."</p>
+    <p class="quote-attr">— The Tinwiser Team</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container reveal">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-heading">Interested in what we're building?</h2>
+    <p class="section-desc" style="text-align:center; margin:12px auto 36px;">Whether you're a partner, investor, or just curious — we'd love to hear from you.</p>
+    <a href="contact.html" class="btn btn-primary">Contact Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<footer>
+  <div class="container"><div class="footer-inner">
+    <div class="footer-left"><img src="logo.png" alt="Tinwiser"><span class="footer-copy">&copy; 2026 Tinwiser</span></div>
+    <ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="solutions.html">Solutions</a></li><li><a href="contact.html">Contact</a></li></ul>
+  </div></div>
+</footer>
+<script src="main.js"></script>
 </body>
 </html>

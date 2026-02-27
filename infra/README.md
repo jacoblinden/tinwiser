@@ -35,7 +35,9 @@ Terraform configuration for deploying the Tinwiser static website to Google Clou
    terraform apply
    ```
 
-6. Configure DNS – Run `terraform output dns_instructions` and add the A records.
+6. Configure DNS – either:
+   - **Manual**: Run `terraform output dns_instructions` and add the A records at your registrar.
+   - **Cloud DNS**: Set `manage_dns = true` and `dns_zone_name = "your-zone-name"` in `terraform.tfvars`. Terraform will create the A records in your existing Cloud DNS zone.
 
 The landing page in `apps/landing/` is automatically uploaded to the bucket on each `terraform apply`.
 

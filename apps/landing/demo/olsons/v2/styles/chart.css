@@ -1,0 +1,584 @@
+/* ============================================================
+   Olsons — chart primitives
+   Anti-aliased lines, calibrated grids. Ink on paper feel.
+   ============================================================ */
+
+.chart-card {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 0;
+  overflow: hidden;
+}
+.chart-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 16px 20px 12px;
+  gap: 16px;
+}
+.chart-head-l {
+  min-width: 0;
+}
+.chart-head-r {
+  display: flex; gap: 8px; align-items: center;
+}
+.chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin: 0;
+}
+.chart-sub {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.chart-canvas {
+  padding: 0 20px 16px;
+}
+
+.chart-footer {
+  border-top: 1px solid var(--line);
+  padding: 10px 20px;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  display: flex; align-items: center; gap: 14px;
+}
+
+/* Force curve chart container */
+.force-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  background: var(--surface-2);
+}
+
+.force-svg .grid-major { stroke: var(--line-2); stroke-width: 1; }
+.force-svg .grid-minor { stroke: var(--line); stroke-width: 1; stroke-dasharray: 1 3; }
+.force-svg .axis      { stroke: var(--ink-3); stroke-width: 1; }
+.force-svg .axis-text { fill: var(--ink-3); }
+.force-svg .axis-label { fill: var(--ink-2); font-size: 10.5px; }
+.force-svg .ghost     { stroke: var(--ink-4); fill: none; stroke-width: 0.8; opacity: 0.12; }
+.force-svg .ghost.warn { stroke: var(--warn); opacity: 0.10; }
+.force-svg .ghost.crit { stroke: var(--crit); opacity: 0.10; }
+.force-svg .current   { stroke: var(--ink); fill: none; stroke-width: 1.6; }
+.force-svg .current.warn { stroke: var(--warn); }
+.force-svg .current.crit { stroke: var(--crit); }
+.force-svg .baseline  { stroke: var(--forecast); fill: none; stroke-width: 1.2; stroke-dasharray: 4 3; opacity: 0.8; }
+.force-svg .envelope  { fill: var(--forecast); opacity: 0.04; }
+.force-svg .annotation { stroke: var(--ink-4); stroke-width: 1; stroke-dasharray: 2 3; }
+.force-svg .annotation-text { fill: var(--ink-3); font-size: 9.5px; }
+.force-svg .peak-mark { fill: var(--crit); }
+
+/* Time-series chart (vibration, etc.) */
+.ts-svg {
+  display: block;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: var(--surface-2);
+}
+.ts-svg .axis      { stroke: var(--ink-4); stroke-width: 1; }
+.ts-svg .grid      { stroke: var(--line); stroke-width: 1; stroke-dasharray: 1 4; }
+.ts-svg .trace     { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square; }
+.ts-svg .trace.warn { stroke: var(--warn); }
+.ts-svg .trace.crit { stroke: var(--crit); }
+.ts-svg .trace.muted { stroke: var(--ink-4); stroke-width: 1; opacity: 0.7; }
+.ts-svg .threshold { stroke: var(--crit); stroke-width: 1; stroke-dasharray: 4 3; opacity: 0.7; }
+.ts-svg .threshold-text { fill: var(--crit); font-size: 9.5px; }
+.ts-svg .projection { stroke: var(--forecast); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
+.ts-svg .projection-band { fill: var(--forecast); opacity: 0.06; }
+.ts-svg .event-line { stroke: var(--ink-4); stroke-width: 1; stroke-dasharray: 2 3; }
+.ts-svg .event-text { fill: var(--ink-3); font-size: 9.5px; }
+.ts-svg .axis-text { fill: var(--ink-3); font-size: 9.5px; }
+.ts-svg .axis-label { fill: var(--ink-2); font-size: 10px; }
+
+/* Tonnage bar histogram */
+.tonn-svg .bar { fill: var(--ink-3); }
+.tonn-svg .bar.warn { fill: var(--warn); }
+.tonn-svg .bar.crit { fill: var(--crit); }
+.tonn-svg .bar.muted { fill: var(--ink-5); opacity: 0.6; }
+.tonn-svg .axis { stroke: var(--ink-4); }
+.tonn-svg .axis-text { fill: var(--ink-3); font-size: 9.5px; }
+
+/* Signal grid */
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.signal-cell {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background .1s ease;
+  min-height: 88px;
+  position: relative;
+}
+.signal-cell:hover { background: var(--surface); }
+.signal-cell .sc-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.signal-cell .sc-name { font-size: 11px; color: var(--ink-3); letter-spacing: 0.02em; }
+.signal-cell .sc-status { font-size: 10px; }
+.signal-cell .sc-value {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.signal-cell .sc-value.warn { color: var(--warn); }
+.signal-cell .sc-value.crit { color: var(--crit); }
+.signal-cell .sc-unit {
+  font-size: 11px;
+  color: var(--ink-4);
+  font-weight: 400;
+  margin-left: 2px;
+}
+.signal-cell .sc-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--ink-4);
+  display: flex; justify-content: space-between; gap: 6px;
+}
+.signal-cell .sc-spark {
+  position: absolute;
+  right: 14px; bottom: 12px;
+  height: 22px; width: 64px;
+}
+
+/* ─── Generic chart svg base ───────────────────────────────── */
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  background: var(--surface-2);
+}
+.chart-svg .grid-major { stroke: var(--line-2); stroke-width: 1; }
+.chart-svg .grid-minor { stroke: var(--line); stroke-width: 1; stroke-dasharray: 1 3; }
+.chart-svg .axis       { stroke: var(--ink-3); stroke-width: 1; }
+.chart-svg .axis-text  { fill: var(--ink-3); font-size: 9.5px; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.chart-svg .axis-label { fill: var(--ink-2); font-size: 10px; font-family: var(--font-mono); }
+.chart-svg .hover-cursor { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 2; opacity: 0.7; }
+.chart-svg .annotation { stroke: var(--ink-4); stroke-width: 1; stroke-dasharray: 2 3; }
+
+/* ─── Chart layout helpers ─────────────────────────────────── */
+.chart-grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 22px;
+}
+.chart-grid-3 {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 22px;
+}
+
+/* ─── Chart header refinements ─────────────────────────────── */
+.chart-eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 2px;
+}
+.chart-eyebrow .sep { color: var(--ink-5); }
+.chart-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--ink-1);
+  line-height: 1.5;
+}
+.chart-summary .lead {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ─── Multi-signal overlay ─────────────────────────────────── */
+.multi-overlay {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+.multi-legend {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0;
+  background: var(--surface);
+}
+.multi-legend-row {
+  display: grid;
+  grid-template-columns: 16px minmax(120px, 1.4fr) 1fr 110px auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11.5px;
+}
+.multi-legend-row:last-child { border-bottom: none; }
+.multi-legend-row .legend-swatch {
+  width: 14px; height: 2px; display: inline-block;
+}
+.multi-legend-row .legend-name { color: var(--ink-1); }
+.multi-legend-row .legend-value {
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.multi-legend-row .legend-value.t-warn { color: var(--warn); }
+.multi-legend-row .legend-value.t-crit { color: var(--crit); }
+.multi-legend-row .legend-unit { color: var(--ink-4); font-size: 10.5px; margin-left: 2px; }
+.multi-legend-row .legend-range {
+  font-size: 10.5px;
+  color: var(--ink-3);
+  text-align: right;
+}
+
+/* ─── Small multiples — synced-hover ───────────────────────── */
+.small-multiples {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.sm-cell {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: crosshair;
+  transition: background 0.1s ease;
+  min-width: 0;
+}
+.sm-cell:hover { background: var(--surface); }
+.sm-cell-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.sm-cell-head .sm-name {
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sm-cell-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.sm-value {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.sm-value.t-warn { color: var(--warn); }
+.sm-value.t-crit { color: var(--crit); }
+.sm-unit { font-size: 10.5px; color: var(--ink-4); margin-left: 3px; font-weight: 400; }
+.sm-base {
+  font-size: 10px;
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+.sm-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--surface-2);
+}
+.sm-svg .trace { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square; }
+.sm-svg .trace.warn { stroke: var(--warn); }
+.sm-svg .trace.crit { stroke: var(--crit); }
+.sm-svg .threshold { stroke: var(--crit); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.6; }
+.sm-svg .hover-cursor { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 1 2; opacity: 0.7; }
+.sm-cell-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--ink-4);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Spectrogram ──────────────────────────────────────────── */
+.spec-svg { background: var(--surface-2); }
+.spec-svg .annotation { stroke-width: 1; }
+
+/* Color-ramp legend strip */
+.spec-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10.5px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+.spec-legend .ramp {
+  height: 8px;
+  width: 140px;
+  background: linear-gradient(to right,
+    rgb(244, 241, 232),
+    rgb(213, 195, 145),
+    rgb(160, 107, 15)
+  );
+  border: 1px solid var(--line-2);
+}
+
+/* ─── FFT ──────────────────────────────────────────────────── */
+.fft-svg { background: var(--surface-2); }
+.fft-svg .fft-marker { stroke-width: 1; }
+
+/* ─── Heatmap calendar ─────────────────────────────────────── */
+.cal-svg { background: var(--surface-2); }
+
+/* Color-ramp legend for calendar */
+.cal-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+.cal-legend .ramp {
+  height: 6px;
+  width: 100px;
+  background: linear-gradient(to right,
+    rgb(244, 241, 232),
+    rgb(120, 110, 90),
+    rgb(20, 19, 15)
+  );
+  border: 1px solid var(--line-2);
+}
+.cal-legend.warn .ramp {
+  background: linear-gradient(to right,
+    rgb(245, 241, 229),
+    rgb(200, 165, 90),
+    rgb(160, 107, 15)
+  );
+}
+
+/* ─── Pareto ───────────────────────────────────────────────── */
+.pareto-svg .pareto-bar { fill: var(--ink-2); }
+.pareto-svg .pareto-bar.mech { fill: var(--ink); }
+.pareto-svg .pareto-bar.hyd  { fill: var(--olsons); }
+.pareto-svg .pareto-bar.elec { fill: var(--forecast); }
+.pareto-svg .pareto-bar.tool { fill: var(--warn); }
+.pareto-svg .pareto-bar.svc  { fill: var(--ink-4); }
+
+.pareto-legend {
+  display: flex;
+  gap: 12px;
+  font-size: 10.5px;
+  color: var(--ink-3);
+  flex-wrap: wrap;
+}
+.pareto-legend .item {
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.pareto-legend .swatch {
+  width: 10px; height: 10px; display: inline-block;
+}
+
+/* ─── Fleet strip ──────────────────────────────────────────── */
+.fleet-svg { background: var(--surface-2); }
+
+/* ─── Hydraulic schematic ──────────────────────────────────── */
+.hyd-svg { background: var(--surface); }
+
+/* Slide parallelism corner widget */
+.slide-corners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.slide-corner {
+  background: var(--surface-2);
+  padding: 12px 14px;
+}
+.slide-corner .lbl { font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; text-transform: uppercase; }
+.slide-corner .val {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 4px;
+}
+.slide-corner.warn .val { color: var(--warn); }
+.slide-corner.crit .val { color: var(--crit); }
+.slide-corner .delta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+/* ─── Fleet overview charts ─────────────────────────────────── */
+.fleet-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+.fleet-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.fleet-hero-chart .chart-canvas {
+  padding-bottom: 8px;
+}
+.fleet-horizon-wrap {
+  position: relative;
+}
+.fleet-horizon-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 0 20px 4px;
+}
+.fleet-horizon-svg .hover-cursor {
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.avoided-downtime-wrap {
+  position: relative;
+}
+.avoided-downtime-kpi {
+  padding: 0 20px 8px;
+}
+.avoided-step-label {
+  padding: 0 20px 4px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.avoided-svg .hover-cursor {
+  stroke: var(--ink-4);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.interventions-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+.interventions-legend .item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.interventions-legend .swatch {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 1px;
+}
+
+.health-dist-svg .axis-text {
+  fill: var(--ink-2);
+  font-size: 11px;
+}
+
+.fleet-hero-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.fleet-hero-kpi {
+  background: var(--surface-2);
+  padding: 12px 14px;
+}
+.fleet-hero-kpi-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.fleet-hero-kpi-value {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 4px;
+  line-height: 1;
+}
+.fleet-hero-kpi-value .unit {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-3);
+}
+.fleet-hero-kpi-sub {
+  font-size: 10.5px;
+  color: var(--ink-3);
+  margin-top: 5px;
+  line-height: 1.35;
+}
+
+.site-spark-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.site-spark-cell {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+}
+.site-spark-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.site-spark-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.site-spark-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}

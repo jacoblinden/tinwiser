@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Olsons — Predictive maintenance demo</title>
+<meta name="description" content="Interactive demo — mock fleet data for predictive maintenance UI exploration." />
+
+<!-- Inter + mono stack for body / data -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/app.css">
+<link rel="stylesheet" href="styles/responsive.css">
+<link rel="stylesheet" href="styles/investigation.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous" />
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Data + tweaks shell -->
+<script src="data.js"></script>
+<script src="chart-data.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<!-- Components -->
+<script type="text/babel" src="icons.jsx"></script>
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel" src="fleet-charts.jsx"></script>
+<script type="text/babel" src="site-charts.jsx"></script>
+<script type="text/babel" src="machine-charts.jsx"></script>
+<script type="text/babel" src="investigation-chart.jsx"></script>
+<script type="text/babel" src="investigation-grid.jsx"></script>
+<script type="text/babel" src="investigation-workspace.jsx"></script>
+<script type="text/babel" src="design-notes.jsx"></script>
+
+<!-- Screens -->
+<script type="text/babel" src="screens/fleet.jsx"></script>
+<script type="text/babel" src="screens/site.jsx"></script>
+<script type="text/babel" src="screens/machine.jsx"></script>
+<script type="text/babel" src="screens/investigate.jsx"></script>
+<script type="text/babel" src="screens/alert.jsx"></script>
+<script type="text/babel" src="screens/alarms.jsx"></script>
+<script type="text/babel" src="screens/inbox.jsx"></script>
+<script type="text/babel" src="screens/reports.jsx"></script>
+
+<!-- App -->
+<script type="text/babel" src="app.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>

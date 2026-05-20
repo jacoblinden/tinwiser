@@ -490,10 +490,6 @@
   .site-kpi-grid > div:nth-last-child(-n+2) { border-bottom: none; }
 
   /* Machine detail */
-  .page-body--machine {
-    padding-bottom: calc(var(--mob-nav-h) + 64px + env(safe-area-inset-bottom, 0px));
-  }
-
   .machine-page-header {
     flex-direction: column;
     align-items: stretch;
@@ -602,22 +598,6 @@
     border-bottom-color: var(--mob-line);
   }
 
-  .machine-ask-fab {
-    right: var(--mob-pad-x);
-    bottom: calc(var(--mob-nav-h) + 10px + env(safe-area-inset-bottom, 0px));
-    max-width: calc(100vw - var(--mob-pad-x) * 2);
-    padding: 10px 14px;
-    font-size: 12px;
-    min-height: 44px;
-    box-shadow: 0 2px 12px rgba(28, 27, 24, 0.12);
-  }
-  .machine-ask-panel {
-    left: var(--mob-pad-x);
-    right: var(--mob-pad-x);
-    width: auto;
-    bottom: calc(var(--mob-nav-h) + 10px + env(safe-area-inset-bottom, 0px));
-    max-height: min(62vh, 420px);
-  }
   .machine-signal-grid-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machine-signal-cell { padding: 8px 10px; border-color: var(--mob-line); }
   .machine-signal-cell:nth-child(2n) { border-right: none; }
@@ -781,7 +761,7 @@
   }
 
   /* Misc — legacy fixed buttons */
-  button[style*="position: fixed"][style*="bottom: 20"]:not(.machine-ask-fab) {
+  button[style*="position: fixed"][style*="bottom: 20"] {
     bottom: calc(var(--mob-nav-h) + 12px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .twk-panel {

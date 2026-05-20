@@ -299,91 +299,15 @@ function ServiceHistory({ m }) {
   );
 }
 
-// ─── AI chat panel (delight feature) ───────────────────────────────────────
-function AskMachine({ m }) {
-  const [open, setOpen] = useStateMachine(false);
-  const [q, setQ] = useStateMachine("");
-  const [transcript, setTranscript] = useStateMachine([
-    { who: "user", text: "When was this bearing last greased?" },
-    { who: "ai", text: "The drive-side bearing was last greased on 28 April 2026 — 21 days ago — during quarterly service by M. Kowalski. The manufacturer interval is 60 days under continuous duty." },
-  ]);
-  const Ic = window.Icons;
-  if (!open) {
-    return (
-      <button type="button" className="machine-ask-fab" onClick={() => setOpen(true)} aria-label={"Ask about " + m.name}>
-        <Ic.sparkle size={14}/> <span>Ask about this machine</span>
-      </button>
-    );
-  }
-  const ask = () => {
-    if (!q.trim()) return;
-    const userQ = q;
-    setTranscript((t) => [...t, { who: "user", text: userQ }, { who: "ai", text: "…", pending: true }]);
-    setQ("");
-    setTimeout(() => {
-      setTranscript((t) => {
-        const next = [...t];
-        next[next.length - 1] = { who: "ai", text:
-          "Drive-side bearing was last greased on 28 April during quarterly service by M. Kowalski — 21 days ago. Three similar Schuler MSP presses needed inspection at this vibration slope; two resolved with re-grease only (WLF-P02, Sep 2025). Service team reviewed this case 17 May — they recommend DTI gauge confirmation on the next walkdown." };
-        return next;
-      });
-    }, 900);
-  };
-  return (
-    <div className="machine-ask-panel">
-      <div style={{padding: "12px 14px", borderBottom: "1px solid var(--line)",
-                    display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-        <div style={{display:"flex", alignItems:"center", gap: 8}}>
-          <Ic.sparkle size={14}/>
-          <div style={{fontSize: 13, fontWeight: 500}}>Ask about {m.name}</div>
-        </div>
-        <button className="btn btn-ghost btn-sm" onClick={() => setOpen(false)}><Ic.x size={12}/></button>
-      </div>
-      <div className="scroll-clean" style={{flex: 1, overflowY: "auto", padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10}}>
-        {transcript.map((m, i) => (
-          <div key={i} style={{display: "flex", justifyContent: m.who === "user" ? "flex-end" : "flex-start"}}>
-            <div style={{maxWidth: "85%", padding: "8px 12px", borderRadius: 10, fontSize: 12.5, lineHeight: 1.5,
-                           background: m.who === "user" ? "var(--ink)" : "var(--surface-2)",
-                           color: m.who === "user" ? "white" : "var(--ink-1)",
-                           border: m.who === "user" ? "none" : "1px solid var(--line)"}}>
-              {m.text}
-            </div>
-          </div>
-        ))}
-        {transcript.length <= 2 && (
-          <div style={{display:"flex", flexDirection:"column", gap: 6, marginTop: 4}}>
-            {["Is this trend normal for this machine type?",
-              "Show me the parts I'd need for the recommended action",
-              "Has this happened on similar machines?"].map((s, i) => (
-              <button key={i} onClick={() => { setQ(s); setTimeout(ask, 50); }}
-                style={{textAlign:"left", padding: "8px 10px", border: "1px dashed var(--line-2)", borderRadius: 7,
-                         background: "transparent", color: "var(--ink-2)", fontSize: 12, fontFamily:"inherit", cursor:"pointer"}}>
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-      <div style={{padding: 10, borderTop: "1px solid var(--line)", display: "flex", gap: 6}}>
-        <input className="input" placeholder="Ask anything…" value={q}
-               onChange={(e) => setQ(e.target.value)}
-               onKeyDown={(e) => e.key === "Enter" && ask()}/>
-        <button className="btn btn-sm btn-primary" onClick={ask}>Ask</button>
-      </div>
-    </div>
-  );
-}
-
 // ─── Main machine screen ──────────────────────────────────────────────────
 function MachineScreen({ machineId, go }) {
-  const Ic = window.Icons;
   const m = window.getMachine(machineId);
   if (!m) return <div className="page-body">Unknown machine.</div>;
   const site = window.getSite(m.site);
   const [tab, setTab] = useStateMachine("overview");
 
   return (
-    <div className="page-body page-body--machine fade-in">
+    <div className="page-body fade-in">
       <MachineHeader m={m} site={site} />
       <HealthCard m={m} />
 
@@ -468,8 +392,6 @@ function MachineScreen({ machineId, go }) {
         </>
       )}
       {tab === "service" && <ServiceHistory m={m} />}
-
-      <AskMachine m={m} />
     </div>
   );
 }

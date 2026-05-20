@@ -87,7 +87,7 @@ function DesignNotes() {
           </Note>
 
           <Note title="What's still placeholder">
-            <p>The factory floor plan, the AI chat surface ("Ask about this machine"), and the forecast confidence bands are sketched but not wired to real data. FFT spectrogram, scatter correlation, and fleet comparison views are listed in the brief but not built in this round.</p>
+            <p>The factory floor plan and forecast confidence bands are sketched but not wired to real data. FFT spectrogram, scatter correlation, and fleet comparison views are listed in the brief but not built in this round.</p>
           </Note>
 
           <Note title="Try these flows">

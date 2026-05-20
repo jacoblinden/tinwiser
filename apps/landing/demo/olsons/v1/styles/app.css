@@ -907,41 +907,6 @@
 }
 .fact-row:last-child { border-bottom: none; }
 
-.machine-ask-fab {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 100;
-  padding: 8px 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: 0;
-  background: var(--surface-2);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--ink);
-  box-shadow: var(--shadow-pop);
-}
-.machine-ask-panel {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 360px;
-  background: var(--surface-2);
-  border: 1px solid var(--line-strong);
-  border-radius: 0;
-  z-index: 100;
-  max-height: 480px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: var(--shadow-pop);
-}
-
 .machine-hero-charts > .card,
 .machine-hero-charts > div {
   border-radius: 0;

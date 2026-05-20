@@ -1,4 +1,4 @@
-// alert.jsx — Alert / Work Order Detail — the "feels like a useful colleague" page.
+// alert.jsx — Alert detail — the "feels like a useful colleague" page.
 
 const { useState: useStateAlert } = React;
 
@@ -50,7 +50,6 @@ function AlertScreen({ alertId, go }) {
           <div className="alert-header-actions" style={{display:"flex", gap: 8, alignItems: "center"}}>
             <button className="btn btn-sm btn-ghost" title="Snooze"><Ic.bell size={13}/> Snooze</button>
             <button className="btn btn-sm btn-ghost" title="Dismiss"><Ic.x size={13}/> Dismiss</button>
-            <button className="btn btn-sm btn-accent topbar-primary-action" title="Create work order"><Ic.wrench size={13}/> Work order</button>
           </div>
         </div>
       </div>
@@ -278,9 +277,6 @@ function AlertScreen({ alertId, go }) {
                   <span className="chip-outline chip"><Ic.plus size={10}/> Add</span>
                 </div>
               </Field>
-              <button className="btn btn-primary" style={{height: 36, marginTop: 4}}>
-                <Ic.wrench size={13}/> Create work order
-              </button>
             </div>
           </div>
 

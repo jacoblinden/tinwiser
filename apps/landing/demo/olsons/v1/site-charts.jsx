@@ -163,7 +163,7 @@ function WhatChangedThisWeek({ siteId }) {
 function SiteActivityFeed({ siteId, go }) {
   const data = window.getSiteChartData(siteId);
   if (!data?.activity?.length) return null;
-  const typeLabel = { alarm: "Alarm", service: "Service", work: "Work order", offline: "Offline" };
+  const typeLabel = { alarm: "Alarm", service: "Service", work: "Maintenance", offline: "Offline" };
   const typeClass = { alarm: "warn", service: "ok", work: "forecast", offline: "unknown" };
 
   return (
@@ -171,7 +171,7 @@ function SiteActivityFeed({ siteId, go }) {
       <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 600 }}>Site activity · last 30 days</div>
-          <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>Alarms, work orders, service visits, sensor gaps</div>
+          <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>Alarms, maintenance, service visits, sensor gaps</div>
         </div>
       </div>
       <div className="site-activity-list">

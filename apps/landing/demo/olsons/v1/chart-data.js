@@ -586,7 +586,7 @@ function getSiteChartData(siteId) {
     { day: "Today", type: "alarm", label: "ALR-2406 · bearing acceleration critical", machine: "LYN-PMP04" },
     { day: "17 May", type: "alarm", label: "Discharge pressure variance trending up", machine: "LYN-PMP02" },
     { day: "12 May", type: "service", label: "Cooling tower fan bearing inspection", machine: "LYN-CT1" },
-    { day: "9 May", type: "work", label: "Work order · pump room A walkdown", machine: "LYN-PMP01" },
+    { day: "9 May", type: "work", label: "Maintenance · pump room A walkdown", machine: "LYN-PMP01" },
   ] : siteId === "wlf" ? [
     { day: "Today", type: "offline", label: "Sensor offline · cooling fan F-02", machine: "WLF-F02" },
     { day: "Yesterday", type: "alarm", label: "ALR-2401 · drive-side bearing trend", machine: "WLF-P04" },

@@ -301,7 +301,6 @@ function Topbar({ crumbs, actions, sub, onMenuOpen, primaryAction }) {
               Charts
             </button>
             <button className="btn btn-ghost btn-sm topbar-desktop-only" title="Notifications"><Ic.bell size={14}/></button>
-            <button className="btn btn-sm topbar-primary-action" title="New work order" aria-label="New work order"><Ic.plus size={15}/> New work order</button>
           </div>
         )}
         {primaryAction}

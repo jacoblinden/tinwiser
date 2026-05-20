@@ -42,7 +42,6 @@ function PlanScreen({ go, persona }) {
         <div style={{display: "flex", gap: 8}}>
           <button className="btn btn-sm btn-ghost"><Ic.download size={13}/> Export iCal</button>
           <button className="btn btn-sm btn-ghost"><Ic.share size={13}/> Send to Anna</button>
-          <button className="btn btn-sm btn-primary"><Ic.plus size={13}/> Schedule work</button>
         </div>
       </div>
 

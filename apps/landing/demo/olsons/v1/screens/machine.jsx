@@ -5,30 +5,38 @@ const { useState: useStateMachine, useMemo: useMemoMachine } = React;
 function MachineHeader({ m, site }) {
   const Ic = window.Icons;
   return (
-    <div className="page-h" style={{alignItems: "center", marginBottom: 12}}>
-      <div style={{display: "flex", gap: 12, alignItems: "center"}}>
-        <div style={{padding: "8px 10px", background: "var(--surface-2)", border: "1px solid var(--line)", display: "flex", flexDirection: "column", gap: 6, alignItems: "center"}}>
+    <div className="page-h machine-page-header">
+      <div className="machine-page-header-main">
+        <div className="machine-page-thumb">
           <MachineFingerprint seed={m.id} status={m.status} bars={14} />
           <MachineIcon type={m.type} size={18} />
         </div>
-        <div style={{minWidth: 0, flex: 1}}>
-          <h1 className="page-title" style={{display: "flex", alignItems: "baseline", gap: 10, fontSize: 20, flexWrap: "wrap"}}>
-            <span>{m.name}</span>
-            <span className="mono" style={{fontSize: 12, color: "var(--ink-4)", fontWeight: 400}}>{m.id}</span>
-            <StatusTag status={m.status} />
+        <div className="machine-page-meta">
+          <h1 className="page-title machine-page-title">
+            <span className="machine-page-name">{m.name}</span>
+            <span className="machine-page-id mono">{m.id}</span>
           </h1>
-          <div className="page-sub" style={{display:"flex", alignItems:"center", gap: 8, flexWrap: "wrap"}}>
-            <span>{m.model}</span><span>·</span>
-            <span>{site.name} / {m.area}</span><span>·</span>
-            <span>Criticality <strong style={{color: "var(--ink-1)", fontWeight: 600}}>{m.criticality}</strong></span><span>·</span>
+          <div className="machine-page-status-row">
+            <StatusTag status={m.status} />
+          </div>
+          <div className="page-sub machine-page-sub">
+            <span>{m.model}</span>
+            <span className="machine-page-sub-sep" aria-hidden="true">·</span>
+            <span>{site.name} / {m.area}</span>
+            <span className="machine-page-sub-sep" aria-hidden="true">·</span>
+            <span>Criticality <strong>{m.criticality}</strong></span>
+            <span className="machine-page-sub-sep" aria-hidden="true">·</span>
             <span>{m.runtime}</span>
           </div>
         </div>
       </div>
-      <div style={{display:"flex", gap: 8}}>
-        <button className="btn btn-sm btn-ghost"><Ic.bell size={13} /> Mute alerts</button>
-        <button className="btn btn-sm btn-ghost"><Ic.calendar size={13} /> Schedule service</button>
-        <button className="btn btn-sm"><Ic.plus size={13} /> Work order</button>
+      <div className="machine-page-header-actions">
+        <button type="button" className="btn btn-sm btn-ghost machine-header-action-secondary" aria-label="Mute alerts">
+          <Ic.bell size={13} /> <span className="btn-label">Mute alerts</span>
+        </button>
+        <button type="button" className="btn btn-sm btn-ghost machine-header-action-secondary" aria-label="Schedule service">
+          <Ic.calendar size={13} /> <span className="btn-label">Schedule service</span>
+        </button>
       </div>
     </div>
   );
@@ -83,22 +91,24 @@ function HealthCard({ m }) {
   return (
     <div className="machine-hero card" style={{ padding: 0, overflow: "hidden" }}>
       <div className="machine-hero-top">
-        <div className="machine-hero-health">
-          <div className="machine-hero-score">
-            <span className="data-hero mono tnum" style={{ fontSize: 44, lineHeight: 1 }}>{v == null ? "—" : v}</span>
-            <span style={{ fontSize: 12, color: "var(--ink-3)" }}>/ 100</span>
-          </div>
-          <HealthBar value={v} status={status} width={72} />
-        </div>
-        <div className="machine-hero-copy">
-          <div className="eyebrow" style={{ marginBottom: 4 }}>Health</div>
-          <div className="machine-hero-headline">{headline}</div>
-          <p className="pl" style={{ color: "var(--ink-2)", fontSize: 13.5, margin: "8px 0 0", lineHeight: 1.5 }}>{detail}</p>
-          {(status === "warn" || status === "crit") && (
-            <div style={{ marginTop: 12 }}>
-              <ExpertNote>{machineAssessment(m)}</ExpertNote>
+        <div className="machine-hero-summary">
+          <div className="machine-hero-health">
+            <div className="machine-hero-score">
+              <span className="data-hero mono tnum machine-hero-score-num">{v == null ? "—" : v}</span>
+              <span className="machine-hero-score-denom">/ 100</span>
             </div>
-          )}
+            <HealthBar value={v} status={status} width={72} />
+          </div>
+          <div className="machine-hero-copy">
+            <div className="eyebrow machine-hero-eyebrow">Health</div>
+            <div className="machine-hero-headline">{headline}</div>
+            <p className="pl machine-hero-detail">{detail}</p>
+            {(status === "warn" || status === "crit") && (
+              <div className="machine-hero-assessment">
+                <ExpertNote>{machineAssessment(m)}</ExpertNote>
+              </div>
+            )}
+          </div>
         </div>
         <div className="machine-hero-kpis">
           {kpis.map((k) => (
@@ -206,12 +216,11 @@ function LiveData({ m }) {
         <div style={{fontSize: 13, fontWeight: 500}}>Live · last 60s</div>
         <div className="t-3" style={{fontSize: 11.5}}>Updated 4s ago · 6 of 24 channels shown</div>
       </div>
-      <div style={{display:"grid", gridTemplateColumns: "repeat(3, 1fr)"}}>
+      <div className="live-channels-grid">
         {channels.map((c, i) => {
           const Ic = window.Icons[c.icon] || window.Icons.info;
           return (
-            <div key={i} style={{padding: "16px 18px", borderRight: i % 3 !== 2 ? "1px solid var(--line)" : "none",
-                                   borderBottom: i < channels.length - 3 ? "1px solid var(--line)" : "none"}}>
+            <div key={i} className="live-channel-cell">
               <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 6, color: "var(--ink-3)"}}>
                 <Ic size={13} />
                 <span style={{fontSize: 11.5}}>{c.name}</span>
@@ -260,11 +269,7 @@ function ServiceHistory({ m }) {
         <SectionH title="Service history" sub={entries.length + " entries in the last 12 months"} />
         <div className="card" style={{padding: 0, overflow: "hidden"}}>
           {entries.map((e, i) => (
-            <div key={i} style={{display: "grid",
-                                  gridTemplateColumns: "100px 1fr auto auto",
-                                  gap: 14, padding: "14px 18px",
-                                  borderBottom: i < entries.length - 1 ? "1px solid var(--line)" : "none",
-                                  alignItems: "center"}}>
+            <div key={i} className="service-entry-row">
               <div className="mono" style={{fontSize: 11.5, color: "var(--ink-3)"}}>{e.date}</div>
               <div>
                 <div style={{fontSize: 13, color: "var(--ink-1)"}}>{e.what}</div>
@@ -305,13 +310,8 @@ function AskMachine({ m }) {
   const Ic = window.Icons;
   if (!open) {
     return (
-      <button onClick={() => setOpen(true)}
-              style={{position: "fixed", right: 20, bottom: 20, zIndex: 100,
-                       padding: "8px 12px", border: "1px solid var(--line-strong)",
-                       borderRadius: 0, background: "var(--surface-2)", cursor: "pointer",
-                       fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.04em",
-                       display: "inline-flex", alignItems: "center", gap: 6, color: "var(--ink)"}}>
-        <Ic.sparkle size={14}/> Ask about this machine
+      <button type="button" className="machine-ask-fab" onClick={() => setOpen(true)} aria-label={"Ask about " + m.name}>
+        <Ic.sparkle size={14}/> <span>Ask about this machine</span>
       </button>
     );
   }
@@ -330,10 +330,7 @@ function AskMachine({ m }) {
     }, 900);
   };
   return (
-    <div style={{position: "fixed", right: 20, bottom: 20, width: 360,
-                 background: "var(--surface-2)", border: "1px solid var(--line-strong)",
-                 borderRadius: 0, zIndex: 100,
-                 maxHeight: 480, display: "flex", flexDirection: "column", overflow: "hidden"}}>
+    <div className="machine-ask-panel">
       <div style={{padding: "12px 14px", borderBottom: "1px solid var(--line)",
                     display: "flex", alignItems: "center", justifyContent: "space-between"}}>
         <div style={{display:"flex", alignItems:"center", gap: 8}}>
@@ -386,7 +383,7 @@ function MachineScreen({ machineId, go }) {
   const [tab, setTab] = useStateMachine("overview");
 
   return (
-    <div className="page-body fade-in">
+    <div className="page-body page-body--machine fade-in">
       <MachineHeader m={m} site={site} />
       <HealthCard m={m} />
 
@@ -395,7 +392,6 @@ function MachineScreen({ machineId, go }) {
         <div className={"tab " + (tab === "live" ? "active" : "")} onClick={() => setTab("live")}>Live data</div>
         <div className={"tab " + (tab === "history" ? "active" : "")} onClick={() => setTab("history")}>History</div>
         <div className={"tab " + (tab === "service" ? "active" : "")} onClick={() => setTab("service")}>Service <span className="count">5</span></div>
-        <div className={"tab " + (tab === "work" ? "active" : "")} onClick={() => setTab("work")}>Work orders <span className="count">{window.alertsFor(m.id).length}</span></div>
       </div>
 
       {tab === "overview" && (
@@ -414,7 +410,7 @@ function MachineScreen({ machineId, go }) {
                 { date: "12 Mar 2026", who: "T. Schmidt", what: "Replaced position sensor on top die" },
                 { date: "02 Feb 2026", who: "M. Kowalski", what: "Quarterly inspection" },
               ].map((e, i) => (
-                <div key={i} style={{display: "grid", gridTemplateColumns: "100px 1fr auto", gap: 14, padding: "12px 18px", borderBottom: i < 2 ? "1px solid var(--line)" : "none"}}>
+                <div key={i} className="service-entry-row service-entry-row--compact">
                   <div className="mono" style={{fontSize: 11.5, color: "var(--ink-3)"}}>{e.date}</div>
                   <div style={{fontSize: 12.5}}>{e.what}</div>
                   <div style={{fontSize: 11.5, color: "var(--ink-3)"}}>{e.who}</div>
@@ -472,20 +468,6 @@ function MachineScreen({ machineId, go }) {
         </>
       )}
       {tab === "service" && <ServiceHistory m={m} />}
-      {tab === "work" && (
-        <div className="two-col">
-          <div>
-            <SectionH title="Active work orders"/>
-            <ActiveIssues m={m} go={go} />
-          </div>
-          <div>
-            <SectionH title="Planned"/>
-            <div className="card" style={{padding: 14}}>
-              <div className="t-3" style={{fontSize: 12}}>No planned work orders.</div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <AskMachine m={m} />
     </div>
@@ -494,7 +476,7 @@ function MachineScreen({ machineId, go }) {
 
 function FactRow({ label, value, sub }) {
   return (
-    <div style={{display: "grid", gridTemplateColumns: "120px 1fr", gap: 14, padding: "10px 16px", borderBottom: "1px solid var(--line)", alignItems: "baseline"}}>
+    <div className="fact-row">
       <div style={{fontSize: 11.5, color: "var(--ink-3)"}}>{label}</div>
       <div style={{fontSize: 12.5, color: "var(--ink-1)"}}>
         {value}{sub && <span className="t-3"> · {sub}</span>}

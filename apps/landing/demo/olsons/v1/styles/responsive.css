@@ -46,6 +46,7 @@
   .fleet-map-layout { grid-template-columns: 1fr; }
   .two-col { grid-template-columns: 1fr; }
   .machine-hero-top { grid-template-columns: 1fr minmax(160px, 200px); }
+  .machine-hero-summary { display: contents; }
   .machine-hero-kpis { border-left: 1px solid var(--line); padding-left: 14px; }
 }
 
@@ -276,8 +277,8 @@
     padding: 0 10px;
     font-size: 13px;
   }
-  .page-h .btn-sm,
-  .page-h .btn,
+  .page-h:not(.machine-page-header) .btn-sm,
+  .page-h:not(.machine-page-header) .btn,
   .alert-header-actions .btn-sm {
     font-size: 0;
     line-height: 0;
@@ -286,18 +287,22 @@
     padding: 0;
     justify-content: center;
   }
-  .page-h .btn-sm svg,
-  .page-h .btn svg,
+  .page-h:not(.machine-page-header) .btn-sm svg,
+  .page-h:not(.machine-page-header) .btn svg,
   .alert-header-actions .btn-sm svg { width: 16px; height: 16px; }
-  .page-h > div:last-child > .btn-sm:not(.btn-ghost),
-  .page-h > div:last-child > .btn-sm.btn-primary,
-  .page-h > div:last-child > .btn-sm.btn-accent {
+  .page-h:not(.machine-page-header) > div:last-child > .btn-sm:not(.btn-ghost),
+  .page-h:not(.machine-page-header) > div:last-child > .btn-sm.btn-primary,
+  .page-h:not(.machine-page-header) > div:last-child > .btn-sm.btn-accent {
     font-size: 13px;
     line-height: normal;
     width: auto;
     min-width: 40px;
     padding: 0 10px;
     gap: 5px;
+  }
+  .machine-page-header .machine-header-action-secondary {
+    font-size: 0;
+    line-height: 0;
   }
   .alert-header-actions .btn-sm.topbar-primary-action {
     width: auto;
@@ -485,25 +490,134 @@
   .site-kpi-grid > div:nth-last-child(-n+2) { border-bottom: none; }
 
   /* Machine detail */
+  .page-body--machine {
+    padding-bottom: calc(var(--mob-nav-h) + 64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .machine-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .machine-page-header-main { width: 100%; }
+  .machine-page-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-size: var(--fs-xl);
+  }
+  .machine-page-status-row { margin-top: 6px; }
+  .machine-page-sub {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .machine-page-sub-sep { display: none; }
+  .machine-page-header .machine-page-header-actions {
+    width: auto;
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .machine-header-action-secondary .btn-label { display: none; }
+  .machine-header-action-secondary {
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
   .machine-hero { border-color: var(--mob-line); }
   .machine-hero-top {
     grid-template-columns: 1fr;
-    padding: 10px var(--mob-pad-x);
-    gap: 10px;
+    padding: 12px var(--mob-pad-x);
+    gap: 12px;
   }
-  .machine-hero-score { font-size: 32px; }
-  .machine-hero-headline { font-size: 15px; }
+  .machine-hero-summary {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 12px 14px;
+    align-items: start;
+  }
+  .machine-hero-health { gap: 6px; }
+  .machine-hero-score-num { font-size: 36px; }
+  .machine-hero-headline { font-size: 15px; line-height: 1.35; }
+  .machine-hero-detail { font-size: 13px; margin-top: 6px; }
+  .machine-hero-assessment { margin-top: 10px; }
+  .machine-hero-assessment .expert-note {
+    padding: 10px 12px;
+    background: var(--surface-sunken);
+  }
+  .machine-hero-assessment .expert-note-body { font-size: 12.5px; line-height: 1.45; }
   .machine-hero-kpis {
     border-left: none;
     padding-left: 0;
     border-top: 1px solid var(--mob-line);
-    padding-top: 8px;
-    display: flex;
-    flex-direction: column;
+    padding-top: 4px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
   }
-  .machine-kpi-tile { padding: 8px 0; border-bottom-color: var(--mob-line); }
-  .machine-kpi-tile:last-child { border-bottom: none; }
+  .machine-kpi-tile {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--mob-line);
+    border-right: 1px solid var(--mob-line);
+  }
+  .machine-kpi-tile:nth-child(2n) { border-right: none; }
+  .machine-kpi-tile:nth-last-child(-n+2) { border-bottom: none; }
+  .machine-kpi-tile .data-hero { font-size: 16px; }
+
+  .live-channels-grid { grid-template-columns: 1fr; }
+  .live-channel-cell {
+    border-right: none !important;
+    border-bottom: 1px solid var(--mob-line) !important;
+    padding: 12px var(--mob-pad-x);
+  }
+  .live-channel-cell:last-child { border-bottom: none !important; }
+
+  .service-entry-row,
+  .service-entry-row--compact {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 10px;
+    padding: 10px var(--mob-pad-x);
+    border-bottom-color: var(--mob-line);
+  }
+  .service-entry-row > :nth-child(1),
+  .service-entry-row--compact > :nth-child(1) {
+    grid-column: 1 / -1;
+    font-size: 11px;
+  }
+  .service-entry-row > :nth-child(4) { justify-self: end; }
+
+  .fact-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 10px var(--mob-pad-x);
+    border-bottom-color: var(--mob-line);
+  }
+
+  .machine-ask-fab {
+    right: var(--mob-pad-x);
+    bottom: calc(var(--mob-nav-h) + 10px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - var(--mob-pad-x) * 2);
+    padding: 10px 14px;
+    font-size: 12px;
+    min-height: 44px;
+    box-shadow: 0 2px 12px rgba(28, 27, 24, 0.12);
+  }
+  .machine-ask-panel {
+    left: var(--mob-pad-x);
+    right: var(--mob-pad-x);
+    width: auto;
+    bottom: calc(var(--mob-nav-h) + 10px + env(safe-area-inset-bottom, 0px));
+    max-height: min(62vh, 420px);
+  }
   .machine-signal-grid-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machine-signal-cell { padding: 8px 10px; border-color: var(--mob-line); }
   .machine-signal-cell:nth-child(2n) { border-right: none; }
@@ -666,8 +780,8 @@
     flex-wrap: nowrap;
   }
 
-  /* Misc */
-  button[style*="position: fixed"][style*="bottom: 20"] {
+  /* Misc — legacy fixed buttons */
+  button[style*="position: fixed"][style*="bottom: 20"]:not(.machine-ask-fab) {
     bottom: calc(var(--mob-nav-h) + 12px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .twk-panel {

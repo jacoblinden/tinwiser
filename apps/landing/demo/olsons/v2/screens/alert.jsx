@@ -161,7 +161,7 @@ function AlertScreen({ alertId, go, persona }) {
                               borderBottom: "1px solid var(--line)",
                               fontSize: 10.5, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase",
                               color: "var(--ink-3)"}}>
-                  <div>Work order</div>
+                  <div>Case ref</div>
                   <div>Customer / press</div>
                   <div>Outcome</div>
                   <div style={{textAlign: "right"}}>Date</div>

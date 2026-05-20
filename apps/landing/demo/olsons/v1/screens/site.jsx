@@ -23,7 +23,6 @@ function SiteHeader({ site }) {
         </div>
         <div style={{display: "flex", gap: 8}}>
           <button className="btn btn-sm btn-ghost" title="Service plan"><Ic.calendar size={13} /> Service plan</button>
-          <button className="btn btn-sm" title="Work order"><Ic.plus size={13} /> Work order</button>
         </div>
       </div>
 
@@ -38,7 +37,7 @@ function SiteHeader({ site }) {
         }/>
         <PracticalCell label="Site contact" value={site.contact} sub={site.contactRole} />
         <PracticalCell label="Spares location" value={site.sparesLocation.split(",")[0]} sub={site.sparesLocation.split(",").slice(1).join(",").trim() || "—"} />
-        <PracticalCell label="Open work orders" value="4" sub="2 scheduled this week" right />
+        <PracticalCell label="Open alerts" value={String(site.attention + site.critical)} sub={site.critical ? "1 critical" : "Needs review"} right />
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ resource "google_storage_bucket" "website" {
 
   website {
     main_page_suffix = "index.html"
-    not_found_page   = "index.html"
+    not_found_page   = "404.html"
   }
 
   cors {
@@ -98,6 +98,8 @@ locals {
     "ico"  = "image/x-icon"
     "woff2" = "font/woff2"
     "woff" = "font/woff"
+    "txt"  = "text/plain; charset=utf-8"
+    "xml"  = "application/xml"
   }
 }
 

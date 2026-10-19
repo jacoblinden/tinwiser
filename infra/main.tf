@@ -130,6 +130,16 @@ resource "google_compute_backend_bucket" "website" {
   bucket_name = google_storage_bucket.website.name
   enable_cdn  = true
 
+  # Security headers (also improves reputation with URL-filtering vendors)
+  custom_response_headers = [
+    "Strict-Transport-Security: max-age=31536000; includeSubDomains",
+    "X-Content-Type-Options: nosniff",
+    "X-Frame-Options: DENY",
+    "Referrer-Policy: strict-origin-when-cross-origin",
+    "Permissions-Policy: camera=(), microphone=(), geolocation=()",
+    "Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+  ]
+
   depends_on = [time_sleep.compute_api_propagation]
 }
 
@@ -140,6 +150,23 @@ resource "google_compute_url_map" "website" {
   host_rule {
     hosts        = ["*"]
     path_matcher = "tinwiser-paths"
+  }
+
+  # Redirect www to the apex domain (one canonical host)
+  host_rule {
+    hosts        = ["www.${var.domain}"]
+    path_matcher = "www-redirect"
+  }
+
+  path_matcher {
+    name = "www-redirect"
+
+    default_url_redirect {
+      host_redirect          = var.domain
+      https_redirect         = true
+      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+      strip_query            = false
+    }
   }
 
   # Rewrite / to /index.html (backend bucket doesn't serve directory indexes)

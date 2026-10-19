@@ -100,7 +100,6 @@ locals {
     "woff" = "font/woff"
     "txt"  = "text/plain; charset=utf-8"
     "xml"  = "application/xml"
-    "jsx"  = "text/plain; charset=utf-8"
   }
 }
 

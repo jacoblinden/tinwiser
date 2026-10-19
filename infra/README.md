@@ -49,15 +49,8 @@ The landing page in `apps/landing/` is automatically uploaded to the bucket on e
 | `load_balancer_ip` | IP for your domain's A record |
 | `dns_instructions` | Step-by-step DNS setup |
 
-## Backend (optional)
+## State
 
-To store Terraform state in GCS, add a `backend.tf`:
+Terraform state is stored remotely in the versioned GCS bucket `gs://tinwiser-tfstate` (see `backend.tf`). Never use local state for this project; run `terraform init` on a fresh checkout to connect to it.
 
-```hcl
-terraform {
-  backend "gcs" {
-    bucket = "your-terraform-state-bucket"
-    prefix = "tinwiser/infra"
-  }
-}
-```
+Note: the website bucket is named `tinwiser_tf_state` for historical reasons. It holds the site files, not Terraform state.
